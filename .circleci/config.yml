@@ -7,8 +7,8 @@ jobs:
     steps:
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY
-          aws-secret-access-key: AWS_ACCESS_SECRET
-          aws-region: AWS_REGION_NAME
+          aws-secret-access-key: AWS_SECRET_KEY
+          aws-region: AWS_REGION
 
   plan-apply:
     working_directory: /tmp/project
