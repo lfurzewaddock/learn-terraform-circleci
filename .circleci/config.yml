@@ -1,6 +1,15 @@
-version: 2
-
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@3.1.4 # https://github.com/CircleCI-Public/aws-cli-orb
 jobs:
+  aws-cli-cred-setup:
+    executor: aws-cli/default
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_ACCESS_SECRET
+          aws-region: AWS_REGION_NAME
+
   plan-apply:
     working_directory: /tmp/project
     docker:
@@ -58,7 +67,11 @@ jobs:
           command: |
             terraform apply -auto-approve tfdestroy
 workflows:
-  version: 2
+  version: 2.1
+  aws-cli:
+    jobs:
+      - aws-cli-cred-setup:
+          context: aws
   plan_approve_apply:
     jobs:
       - plan-apply
